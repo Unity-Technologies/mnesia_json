@@ -14,7 +14,6 @@ pipeline {
                 }
                 
                 sh 'make test'
-                archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
             }
             
             post {
