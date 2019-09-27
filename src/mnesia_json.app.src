@@ -1,0 +1,15 @@
+%% -*- Erlang -*-
+{application, mnesia_json,
+ [{description, "Output information about Mnesia in JSON format"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib,
+    mnesia
+   ]},
+  {env,[]},
+  {modules, []},
+  {licenses, ["Commercial"]},
+  {links, []}
+ ]}.
