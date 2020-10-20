@@ -70,7 +70,7 @@ info() ->
              {uncertain_transactions, mnesia_json_util:open_transactions()},
              {running_nodes, Running},
              {db_nodes, AllNodes},
-             {stopped_db_nodes, [AllNodes -- Running]},
+             {stopped_db_nodes, AllNodes -- Running},
              {held_locks, length(mnesia:system_info(held_locks))},
              {lock_queue, length(mnesia:system_info(lock_queue))},
              {master_tables, mnesia_recover:get_master_node_tables()},
@@ -119,8 +119,19 @@ table_info(Table) ->
 %% represents a version number. So explicitly turn those into
 %% something that jsx can handle.
 
-convert_to_json_term(TermList) ->
-    [{Key, convert_to_jsx_term(Value)} || {Key, Value} <- TermList].
+convert_to_json_term([{K, V} | TermList]) ->
+    JSXTerm = try convert_to_jsx_term(V) of
+                  X ->
+                      X
+              catch
+                  _ ->
+                      % Generic error message so the rest of the info returns. Shouldnt happen, but a good safeguard.
+                      <<"JSX-parse-error">> 
+              end,
+    [{K, JSXTerm} | convert_to_json_term(TermList)];
+convert_to_json_term([]) ->
+    [].
+    
 
 
 convert_to_jsx_term([]) ->
