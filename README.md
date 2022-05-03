@@ -5,7 +5,7 @@ An OTP library to dump information about a running mnesia instance to a JSON whi
 
 To add this to your project in the `rebar.config` file add this to the deps record.
 ```erlang
-{mnesia_json, {git, "git@git.vivox.com:dev-public/mnesia_json.git"}}
+{mnesia_json, {git, "https://github.com/Unity-Technologies/mnesia_json.git"}}
 ```
 
 Note that this is a library application, it does not start any processes in the Erlang VM. It just contains the 1 module
